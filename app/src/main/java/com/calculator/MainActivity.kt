@@ -4,26 +4,36 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.calculator.ui.theme.CalculatorTheme
 
 class MainActivity : ComponentActivity() {
+    var valueOne: Int? = 0
+    var valueTwo: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CalculatorTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(
+                    modifier = Modifier
+                        .background(Color.Black)
+                        .fillMaxSize()
+                ) {
+                    Column {
+
+                    }
                 }
             }
         }
@@ -31,17 +41,36 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun InputValue(label:String,modifier: Modifier = Modifier) {
+    var text = remember { mutableStateOf("|") }
+    OutlinedTextField(
+        value = text.value,
+        onValueChange = { text.value = it },
+        label = { Text(label) }
+
+        )
+    OutlinedTextField(
+
+        value = text.value,
+        onValueChange = { text.value = it },
+        label = { Text("Input Two") }
     )
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     CalculatorTheme {
-        Greeting("Android")
+        Surface(
+            modifier = Modifier
+                .background(Color.Black)
+                .fillMaxSize()
+        ) {
+            Column {
+
+            }
+        }
+
     }
 }

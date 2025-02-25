@@ -12,10 +12,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.calculator.ui.theme.CalculatorTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class Login : ComponentActivity() {
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+        auth = Firebase.auth
         super.onCreate(savedInstanceState)
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+          //
+        }
         enableEdgeToEdge()
         setContent {
             CalculatorTheme {

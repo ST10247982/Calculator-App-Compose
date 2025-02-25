@@ -2,20 +2,17 @@ package com.calculator
 
 
 import android.os.Bundle
-import android.service.autofill.OnClickAction
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -27,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.calculator.ui.theme.CalculatorTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,51 +36,87 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .background(Color.Black)
-                        .fillMaxSize()
-                ) {
-                    Column {
+                        .fillMaxSize(),
 
-                    }
+                    ) {
+
+                    Calculator()
+
                 }
             }
         }
     }
 }
+
+
 @Composable
-fun AddButton(onClick: () -> Unit, modifier: Modifier = Modifier,viewModel: CalculatorViewModel = CalculatorViewModel()) {
-    ElevatedButton(onClick = {viewModel.calculate()}) {
+fun CalculateButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: CalculatorViewModel,
+) {
+    ElevatedButton(onClick = { viewModel.calculate() }) {
         Text("Add")
     }
 }
 
 @Composable
 fun Calculator(
-    viewModel: CalculatorViewModel = CalculatorViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: CalculatorViewModel = viewModel()  // this is with dependancy injection to create a scope, previously we made multiple instances for each composable
+
 ) {
 
-    Box {
-        Row(
-            Modifier
-                .align(Alignment.Center)
-                .padding(8.dp), horizontalArrangement = Arrangement.SpaceEvenly
+    Box(
+        modifier.fillMaxSize(),// we have to set this to fill the max size to take up the page
+        contentAlignment = Alignment.Center
+    ) {     // we use this to shift the box to the center
+
+        Column(
+            modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Center
         ) {
-            OutlinedTextField(
-                value = viewModel.inputOne,
-                onValueChange = { viewModel.inputOne = it },
-                label = { Text(stringResource(R.string.input_one)) },
-                modifier = Modifier.weight(1f)
+            Row(
+                modifier.padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                OutlinedTextField(
+                    value = viewModel.inputOne,
+                    onValueChange = { viewModel.inputOne = it },
+                    label = { Text(stringResource(R.string.input_one)) },
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp),
+
+
+                    )
+                // Spacer(modifier = Modifier.width(16.dp)) // we can use this to add gaps in between
+                OutlinedTextField(
+                    value = viewModel.inputTwo,
+                    onValueChange = { viewModel.inputTwo = it },
+                    label = { Text(stringResource(R.string.input_two)) },
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp)
+                )
+            }
+
+            Text(
+                text = viewModel.result,
+
+
+                )
+            CalculateButton(
+                onClick = { viewModel.calculate() },
+                viewModel = viewModel
+
 
             )
-            Spacer(modifier = Modifier.width(16.dp)) // we can use this to add gaps in between
-            OutlinedTextField(
-                value = viewModel.inputTwo,
-                onValueChange = { viewModel.inputTwo = it },
-                label = { Text(stringResource(R.string.input_two)) },
-                modifier = Modifier.weight(1f)
-            )
+
         }
-
     }
 }
 
@@ -94,10 +128,11 @@ fun GreetingPreview() {
         Surface(
             modifier = Modifier
                 .background(Color.Black)
-                .fillMaxSize()
-        ) {
+                .fillMaxSize(),
 
-            Calculator()
+            ) {
+
+            Calculator(viewModel = CalculatorViewModel())
 
         }
 

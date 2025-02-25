@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "605519644195",
+    "project_id": "st10247982",
+    "storage_bucket": "st10247982.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605519644195:android:3f1e0c57cdb4cb055e5396",
+        "android_client_info": {
+          "package_name": "com.calculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2pLGa0B05l-7-Y6cm-gvFBXEkcmJHs1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605519644195:android:e4c1ed692442e2295e5396",
+        "android_client_info": {
+          "package_name": "com.fakemyapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2pLGa0B05l-7-Y6cm-gvFBXEkcmJHs1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
